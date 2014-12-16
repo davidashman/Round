@@ -1,0 +1,14 @@
+# ignore objects and archives, anywhere in the tree.
+*.[oa]
+*.dylib
+*.deb
+*.save
+package/
+.DS_Store
+_/
+obj/
+theos
+.theos
+*.swp
+xcuserdata
+Round

@@ -1,0 +1,9 @@
+Package: com.dba-tech.round
+Name: Round
+Depends: mobilesubstrate
+Version: 0.0.1
+Architecture: iphoneos-arm
+Description: Rounded corners throughout iOS
+Maintainer: dba Technologies, LLC
+Author: dba Technologies, LLC
+Section: Tweaks
