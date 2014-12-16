@@ -1,11 +1,27 @@
 #import <UIKit/UIKit.h>
+#import <CoreGraphics/CoreGraphics.h>
 
 #define DEFAULT_RADIUS 10
 
-@interface RNDWindow : UIWindow
+@interface RNDView : UIView
 
-@property (nonatomic, retain) CAShapeLayer* cornerLayer;
-@property (nonatomic, retain) UIView* cornerView;
+@end
+
+@implementation RNDView
+
+-(void) drawRect:(CGRect) rect {
+    UIBezierPath* path = [UIBezierPath bezierPathWithRect:self.bounds];
+    UIBezierPath* path2 = [UIBezierPath bezierPathWithRoundedRect:self.bounds cornerRadius:DEFAULT_RADIUS];
+    [path appendPath:path2];
+    path.usesEvenOddFillRule = YES;
+    
+    CGContextSetFillColorWithColor(UIGraphicsGetCurrentContext(), [UIColor blackColor].CGColor);
+    [path fill];
+}
+
+@end
+
+@interface RNDWindow : UIWindow
 
 @end
 
@@ -15,24 +31,14 @@
     self = [super initWithFrame:frame];
     self.windowLevel = 1000000;
     self.userInteractionEnabled = NO;
-
-    UIBezierPath* path1 = [UIBezierPath bezierPathWithRect:self.bounds];
-    UIBezierPath* path2 = [UIBezierPath bezierPathWithRoundedRect:self.bounds cornerRadius:DEFAULT_RADIUS];
-    [path1 appendPath:path2];
-
-    CAShapeLayer* layer = [[[CAShapeLayer alloc] init] autorelease];
-    layer.fillRule = kCAFillRuleEvenOdd;
-    layer.path = path1.CGPath;
-    layer.fillColor = [UIColor blackColor].CGColor;
-    self.cornerLayer = layer;
-
-    UIView* v = [[[UIView alloc] initWithFrame:self.bounds] autorelease];
-    v.userInteractionEnabled = NO;
-    [v.layer addSublayer:layer];
-    self.cornerView = v;
+    self.autoresizesSubviews = YES;
     
+    UIView* v = [[[RNDView alloc] initWithFrame:frame] autorelease];
+    v.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    v.backgroundColor = [UIColor clearColor];
+    v.userInteractionEnabled = NO;
     [self addSubview:v];
-
+    
     return self;
 }
 

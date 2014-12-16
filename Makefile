@@ -6,7 +6,7 @@ include theos/makefiles/common.mk
 
 TWEAK_NAME = Round
 Round_FILES = Tweak.xm
-Round_FRAMEWORKS = UIKit QuartzCore
+Round_FRAMEWORKS = UIKit QuartzCore CoreGraphics
 
 include $(THEOS_MAKE_PATH)/tweak.mk
 
